@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CRUD App</title>
+  <style>
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+      padding: 5px;
+    }
+    input[type="text"] {
+      margin: 10px;
+    }
+    button {
+      margin: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h2>CRUD App</h2>
+
+  <input type="text" id="inputData" placeholder="Enter data...">
+  <button onclick="addData()">Add</button>
+
+  <table id="dataTable">
+    <tr>
+      <th>Data</th>
+      <th>Actions</th>
+    </tr>
+  </table>
+
+  <script>
+    // Array to store the data
+    let data = [];
+
+    // Function to add data to the array and display it in the table
+    function addData() {
+      const inputField = document.getElementById("inputData");
+      const newdata = inputField.value;
+      
+      data.push(newdata);
+      inputField.value = "";
+      
+      displayData();
+    }
+
+    // Function to display the data in the table
+    function displayData() {
+      const table = document.getElementById("dataTable");
+
+      // Clear the table body
+      while(table.rows.length > 1) {
+        table.deleteRow(1);
+      }
+      
+      // Populate the table with the data from the array
+      for(let i = 0; i < data.length; i++) {
+        const row = table.insertRow(i+1);
+        
+        const cell1 = row.insertCell(0);
+        cell1.innerHTML = data[i];
+        
+        const cell2 = row.insertCell(1);
+        cell2.innerHTML = `<button onclick="deleteData(${i})">Delete</button>`;
+      }
+    }
+
+    // Function to delete a data entry from the array and update the table
+    function deleteData(index) {
+      data.splice(index, 1);
+      displayData();
+    }
+  </script>
+</body>
+</html>
